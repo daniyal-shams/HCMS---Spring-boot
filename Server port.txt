@@ -1,0 +1,30 @@
+config-server : 8888
+service-registery : 8761
+api-gateway : 8080
+file-service : 8100
+notification-service : 8200
+auth-service : 8090
+doctor-service : 8081
+nurse-service : 8082
+patient-service : 8083
+appointment-service : 8084
+
+
+
+<dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-devtools</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+		<dependency>
+			<groupId>org.springframework.kafka</groupId>
+			<artifactId>spring-kafka</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-mail</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+		</dependency>

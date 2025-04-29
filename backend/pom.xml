@@ -1,0 +1,86 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" 
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.healthcare</groupId>
+    <artifactId>backend</artifactId>
+    <version>1.0.0</version>
+    <packaging>pom</packaging>
+    <name>Healthcare Management System - Backend</name>
+    <description>Parent module for all backend services</description>
+
+    <modules>
+        <module>api-gateway</module>
+        <module>config-server</module>
+        <module>service-registery</module>
+        <module>doctor-service</module>
+        <module>nurse-service</module>
+        <module>user-service</module>
+        <module>auth-service</module>
+        <module>notification-service</module>
+        <module>billing-service</module>
+        <module>report-service</module>
+        <module>patient-service</module>
+        <module>appointment-service</module>
+        <module>inventory-service</module>
+    </modules>
+
+    <properties>
+        <java.version>17</java.version>
+        <spring-boot.version>3.4.3</spring-boot.version>
+        <spring-cloud.version>2024.0.1</spring-cloud.version>
+        <swagger-config.version>1.0.0</swagger-config.version>
+        <mysql.version>8.0.33</mysql.version>
+    </properties>
+    
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>${spring-boot.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${spring-cloud.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.healthcare</groupId>
+                <artifactId>swagger-config</artifactId>
+                <version>${swagger-config.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>mysql</groupId>
+                <artifactId>mysql-connector-java</artifactId>
+                <version>${mysql.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>3.10.1</version>
+                    <configuration>
+                        <source>${java.version}</source>
+                        <target>${java.version}</target>
+                    </configuration>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-maven-plugin</artifactId>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
+</project>

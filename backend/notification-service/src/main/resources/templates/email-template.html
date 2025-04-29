@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Email Notification</title>
+</head>
+<body>
+    <h1>Appointment Reminder</h1>
+    <p>Dear <span th:text="${name}">[Name]</span>,</p>
+    <p>This is a reminder for your appointment with <span th:text="${doctorName}">[Doctor Name]</span>.</p>
+    <p>Date: <span th:text="${appointmentDate}">[Appointment Date]</span></p>
+    <p>Time: <span th:text="${appointmentTime}">[Appointment Time]</span></p>
+    <p>Thank you for choosing our healthcare services.</p>
+</body>
+</html>

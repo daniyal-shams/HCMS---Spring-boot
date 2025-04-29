@@ -1,0 +1,87 @@
+2. How Pagination Works in patient-service
+The patient-service API should support pagination by accepting page and size as query parameters. Here's an example of how the patient-service might implement this:
+
+Controller in patient-service
+
+@RestController
+@RequestMapping("/api/patients")
+public class PatientController {
+
+    private final PatientService patientService;
+
+    public PatientController(PatientService patientService) {
+        this.patientService = patientService;
+    }
+
+    @GetMapping
+    public Page<PatientDto> getAllPatients(@RequestParam(defaultValue = "0") int page,
+                                           @RequestParam(defaultValue = "10") int size) {
+        return patientService.getPatients(page, size);
+    }
+}
+
+Service in patient-service
+
+@Service
+public class PatientServiceImpl implements PatientService {
+
+    @Autowired
+    private PatientRepository patientRepository;
+
+    @Override
+    public Page<PatientDto> getPatients(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        return patientRepository.findAll(pageable).map(patient -> new PatientDto(
+                patient.getId(),
+                patient.getFirstName(),
+                patient.getLastName(),
+                patient.getEmail(),
+                patient.getPhoneNumber(),
+                patient.getAddress(),
+                patient.getDateOfBirth()
+        ));
+    }
+}
+
+3. Integration with ReportServiceImpl
+The PatientServiceClient can now be used in the ReportServiceImpl to fetch paginated patient data and generate reports.
+
+Example: Fetching Paginated Data
+
+@Autowired
+private PatientServiceClient patientServiceClient;
+
+public void fetchPaginatedPatients() {
+    int page = 0;
+    int size = 10;
+
+    while (true) {
+        Page<PatientDto> patientPage = patientServiceClient.getAllPatients(page, size);
+        List<PatientDto> patients = patientPage.getContent();
+
+        if (patients.isEmpty()) {
+            break;
+        }
+
+        // Process the patients
+        for (PatientDto patient : patients) {
+            System.out.println(patient.getFirstName() + " " + patient.getLastName());
+        }
+
+        if (patientPage.isLast()) {
+            break;
+        }
+        page++;
+    }
+}
+
+4. Benefits of Using @RequestParam
+Flexibility:
+
+Allows dynamic control over pagination parameters (page and size) via query parameters.
+Standardization:
+
+Follows RESTful API best practices for handling query parameters.
+Integration:
+
+Works seamlessly with Feign clients and Spring MVC.
